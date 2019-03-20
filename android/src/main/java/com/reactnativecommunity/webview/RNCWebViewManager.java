@@ -597,6 +597,13 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
+      try{
+        if(!url.startsWith("http://") && !url.startsWith("https://")){
+          return true;
+        }
+      }catch (Exception e){//防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash)
+        return true;//没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
+      }
       dispatchEvent(
         view,
         new TopShouldStartLoadWithRequestEvent(
