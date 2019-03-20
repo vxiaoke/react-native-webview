@@ -163,6 +163,11 @@ RCT_EXPORT_METHOD(stopLoading:(nonnull NSNumber *)reactTag)
 shouldStartLoadForRequest:(NSMutableDictionary<NSString *, id> *)request
              withCallback:(RCTDirectEventBlock)callback
 {
+  NSURL *URL = [NSURL URLWithString:request[@"url"]];
+  NSString *scheme = [URL scheme];
+  if (![scheme isEqualToString:@"http"] && ![scheme isEqualToString:@"https"] && ![scheme isEqualToString:@"about"] ) {
+    request[@"url"] = @"about:blank";
+  }
   _shouldStartLoadLock = [[NSConditionLock alloc] initWithCondition:arc4random()];
   _shouldStartLoad = YES;
   request[@"lockIdentifier"] = @(_shouldStartLoadLock.condition);
