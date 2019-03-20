@@ -123,6 +123,14 @@ RCT_EXPORT_METHOD(injectJavaScript:(nonnull NSNumber *)reactTag script:(NSString
 shouldStartLoadForRequest:(NSMutableDictionary<NSString *, id> *)request
    withCallback:(RCTDirectEventBlock)callback
 {
+  NSURL *URL = [NSURL URLWithString:request[@"url"]];
+  NSString *scheme = [URL scheme];
+  if (![scheme isEqualToString:@"http"] && ![scheme isEqualToString:@"https"] && ![scheme isEqualToString:@"about"] ) {
+    return false;
+  }
+  if([request[@"url"] containsString:@"applink"]) {
+    return false;
+  }
   _shouldStartLoadLock = [[NSConditionLock alloc] initWithCondition:arc4random()];
   _shouldStartLoad = YES;
   request[@"lockIdentifier"] = @(_shouldStartLoadLock.condition);
