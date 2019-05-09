@@ -37,6 +37,9 @@ RCT_EXPORT_VIEW_PROPERTY(onLoadingProgress, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onShouldStartLoadWithRequest, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(injectedJavaScript, NSString)
 RCT_EXPORT_VIEW_PROPERTY(allowsInlineMediaPlayback, BOOL)
+
+RCT_EXPORT_VIEW_PROPERTY(isJump, BOOL)
+
 RCT_EXPORT_VIEW_PROPERTY(mediaPlaybackRequiresUserAction, BOOL)
 #if WEBKIT_IOS_10_APIS_AVAILABLE
 RCT_EXPORT_VIEW_PROPERTY(dataDetectorTypes, WKDataDetectorTypes)
@@ -165,7 +168,7 @@ shouldStartLoadForRequest:(NSMutableDictionary<NSString *, id> *)request
 {
   NSURL *URL = [NSURL URLWithString:request[@"url"]];
   NSString *scheme = [URL scheme];
-  if (![scheme isEqualToString:@"http"] && ![scheme isEqualToString:@"https"] && ![scheme isEqualToString:@"about"] ) {
+  if (!webView.isJump && ![scheme isEqualToString:@"http"] && ![scheme isEqualToString:@"https"] && ![scheme isEqualToString:@"about"] ) {
     request[@"url"] = @"about:blank";
   }
   _shouldStartLoadLock = [[NSConditionLock alloc] initWithCondition:arc4random()];

@@ -30,6 +30,7 @@ RCT_REMAP_VIEW_PROPERTY(scrollEnabled, _webView.scrollView.scrollEnabled, BOOL)
 RCT_REMAP_VIEW_PROPERTY(decelerationRate, _webView.scrollView.decelerationRate, CGFloat)
 RCT_EXPORT_VIEW_PROPERTY(scalesPageToFit, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(messagingEnabled, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(isJump, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(injectedJavaScript, NSString)
 RCT_EXPORT_VIEW_PROPERTY(contentInset, UIEdgeInsets)
 RCT_EXPORT_VIEW_PROPERTY(automaticallyAdjustContentInsets, BOOL)
@@ -44,7 +45,6 @@ RCT_REMAP_VIEW_PROPERTY(dataDetectorTypes, _webView.dataDetectorTypes, UIDataDet
 RCT_REMAP_VIEW_PROPERTY(showsHorizontalScrollIndicator, _webView.scrollView.showsHorizontalScrollIndicator, BOOL)
 RCT_REMAP_VIEW_PROPERTY(showsVerticalScrollIndicator, _webView.scrollView.showsVerticalScrollIndicator, BOOL)
 RCT_REMAP_VIEW_PROPERTY(directionalLockEnabled, _webView.scrollView.directionalLockEnabled, BOOL)
-
 RCT_EXPORT_METHOD(goBack:(nonnull NSNumber *)reactTag)
 {
   [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, RNCUIWebView *> *viewRegistry) {
@@ -125,7 +125,7 @@ shouldStartLoadForRequest:(NSMutableDictionary<NSString *, id> *)request
 {
   NSURL *URL = [NSURL URLWithString:request[@"url"]];
   NSString *scheme = [URL scheme];
-  if (![scheme isEqualToString:@"http"] && ![scheme isEqualToString:@"https"] && ![scheme isEqualToString:@"about"] ) {
+  if (!webView.isJump && ![scheme isEqualToString:@"http"] && ![scheme isEqualToString:@"https"] && ![scheme isEqualToString:@"about"] ) {
     return false;
   }
   if([request[@"url"] containsString:@"applink"]) {

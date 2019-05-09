@@ -22,6 +22,7 @@ shouldStartLoadForRequest:(NSMutableDictionary<NSString *, id> *)request
 
 @property (nonatomic, weak) id<RNCUIWebViewDelegate> delegate;
 
+@property (nonatomic, assign) BOOL isJump;
 @property (nonatomic, copy) NSDictionary *source;
 @property (nonatomic, assign) UIEdgeInsets contentInset;
 @property (nonatomic, assign) BOOL automaticallyAdjustContentInsets;
