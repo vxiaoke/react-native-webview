@@ -105,7 +105,6 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
   // state and release page resources (including any running JavaScript).
   protected static final String BLANK_URL = "about:blank";
   protected WebViewConfig mWebViewConfig;
-
   public RNCWebViewManager() {
     mWebViewConfig = new WebViewConfig() {
       public void configWebView(WebView webView) {
@@ -368,6 +367,13 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     ((RNCWebView) view).setMessagingEnabled(enabled);
   }
 
+  public static boolean  tmp = true;
+
+  @ReactProp(name = "isJump")
+  public void isJump(WebView view, boolean enabled) {
+    tmp = enabled;
+  }
+
   @ReactProp(name = "source")
   public void setSource(WebView view, @Nullable ReadableMap source) {
     if (source != null) {
@@ -594,7 +600,7 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
       try{
-        if(!url.startsWith("http://") && !url.startsWith("https://")){
+        if(!tmp && !url.startsWith("http://") && !url.startsWith("https://")){
           return true;
         }
       }catch (Exception e){//防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash)
