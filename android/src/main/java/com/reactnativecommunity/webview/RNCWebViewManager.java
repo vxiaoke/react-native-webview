@@ -367,7 +367,7 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     ((RNCWebView) view).setMessagingEnabled(enabled);
   }
 
-  public static boolean  tmp = true;
+  public static boolean  tmp = false;
 
   @ReactProp(name = "isJump")
   public void isJump(WebView view, boolean enabled) {
