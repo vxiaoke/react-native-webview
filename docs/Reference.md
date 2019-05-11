@@ -42,6 +42,7 @@ This document lays out the current public properties and methods for the React N
 - [`useWebKit`](Reference.md#usewebkit)
 - [`url`](Reference.md#url)
 - [`html`](Reference.md#html)
+- [`keyboardDisplayRequiresUserAction`](Reference.md#keyboardDisplayRequiresUserAction)
 - [`hideKeyboardAccessoryView`](Reference.md#hidekeyboardaccessoryview)
 - [`allowsBackForwardNavigationGestures`](Reference.md#allowsbackforwardnavigationgestures)
 - [`incognito`](Reference.md#incognito)
@@ -50,6 +51,7 @@ This document lays out the current public properties and methods for the React N
 - [`cacheEnabled`](Reference.md#cacheEnabled)
 - [`pagingEnabled`](Reference.md#pagingEnabled)
 - [`allowsLinkPreview`](Reference.md#allowsLinkPreview)
+- [`sharedCookiesEnabled`](Reference.md#sharedCookiesEnabled)
 
 ## Methods Index
 
@@ -755,6 +757,16 @@ If true, use WKWebView instead of UIWebView.
 
 ---
 
+### `keyboardDisplayRequiresUserAction`
+
+If false, web content can programmatically display the keyboard when using the WKWebView. The default value is `true`.
+
+| Type    | Required | Platform |
+| ------- | -------- | -------- |
+| boolean | No       | iOS      |
+
+---
+
 ### `hideKeyboardAccessoryView`
 
 If true, this will hide the keyboard accessory view (< > and Done) when using the WKWebView.
@@ -828,6 +840,16 @@ If the value of this property is true, the scroll view stops on multiples of the
 ### `allowsLinkPreview`
 
 A Boolean value that determines whether pressing on a link displays a preview of the destination for the link. In iOS this property is available on devices that support 3D Touch. In iOS 10 and later, the default value is true; before that, the default value is false.
+
+| Type    | Required | Platform |
+| ------- | -------- | -------- |
+| boolean | No       | iOS      |
+
+---
+
+### `sharedCookiesEnabled`
+
+Set `true` if shared cookies from `[NSHTTPCookieStorage sharedHTTPCookieStorage]` should used for every load request in the `RNCWKWebView`. The default value is `false`.
 
 | Type    | Required | Platform |
 | ------- | -------- | -------- |
