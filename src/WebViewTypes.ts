@@ -7,6 +7,7 @@ import {
   NativeMethodsMixin,
   Constructor,
   UIManagerStatic,
+  NativeScrollEvent,
 } from 'react-native';
 
 export interface WebViewCommands {
@@ -103,6 +104,7 @@ export interface WebViewNavigation extends WebViewNativeEvent {
     | 'reload'
     | 'formresubmit'
     | 'other';
+  mainDocumentURL?: string;
 }
 
 export type DecelerationRateConstant = 'normal' | 'fast';
@@ -213,6 +215,7 @@ export interface CommonNativeWebViewProps extends ViewProps {
   injectedJavaScript?: string;
   mediaPlaybackRequiresUserAction?: boolean;
   messagingEnabled: boolean;
+  onScroll?: (event: NativeScrollEvent) => void;
   onLoadingError: (event: WebViewErrorEvent) => void;
   onLoadingFinish: (event: WebViewNavigationEvent) => void;
   onLoadingProgress: (event: WebViewProgressEvent) => void;
@@ -374,6 +377,13 @@ export interface IOSWebViewProps extends WebViewSharedProps {
    * @platform ios
    */
   useSharedProcessPool?: boolean;
+
+  /**
+   * Append to the existing user-agent. Overriden if `userAgent` is set.
+   * @platform ios
+   */
+  applicationNameForUserAgent?: string;
+
   /**
    * The custom user agent string.
    */
@@ -520,6 +530,11 @@ export interface AndroidWebViewProps extends WebViewSharedProps {
    * @platform android
    */
   mixedContentMode?: 'never' | 'always' | 'compatibility';
+  
+  /**
+   * Sets ability to open fullscreen videos on Android devices.
+  */
+  allowsFullscreenVideo?: boolean;
 }
 
 export interface WebViewSharedProps extends ViewProps {
@@ -541,6 +556,11 @@ export interface WebViewSharedProps extends ViewProps {
    * Function that returns a loading indicator.
    */
   renderLoading?: () => ReactElement;
+
+  /**
+   * Function that is invoked when the `WebView` scrolls.
+   */
+  onScroll?: (event: NativeScrollEvent) => void;
 
   /**
    * Function that is invoked when the `WebView` has finished loading.
